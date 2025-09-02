@@ -32,6 +32,9 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
+.env
+/backend/*.env
+/backend/cookies/
 
 # Symbolication related
 app.*.symbols
