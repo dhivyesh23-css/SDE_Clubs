@@ -4,7 +4,14 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OverallComparisonPage extends StatefulWidget {
-  const OverallComparisonPage({super.key});
+  final List<Map<String, dynamic>>? clubs;
+  final Map<String, dynamic>? selectedClub;
+
+  const OverallComparisonPage({
+    super.key,
+    this.clubs,
+    this.selectedClub,
+  });
 
   @override
   State<OverallComparisonPage> createState() => _OverallComparisonPageState();
@@ -17,7 +24,12 @@ class _OverallComparisonPageState extends State<OverallComparisonPage> {
   @override
   void initState() {
     super.initState();
-    _loadAnalytics();
+    if (widget.clubs != null) {
+      clubs = widget.clubs!;
+      isLoading = false;
+    } else {
+      _loadAnalytics();
+    }
   }
 
   Future<void> _loadAnalytics() async {
@@ -68,7 +80,9 @@ class _OverallComparisonPageState extends State<OverallComparisonPage> {
                           barRods: [
                             BarChartRodData(
                               toY: score,
-                              color: Colors.primaries[index % Colors.primaries.length],
+                              color: club == widget.selectedClub
+                                  ? Colors.red // highlight selected
+                                  : Colors.primaries[index % Colors.primaries.length],
                               width: 18,
                             ),
                           ],
